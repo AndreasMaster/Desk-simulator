@@ -1,0 +1,2 @@
+client,product,notional,currency,maturity_years,pay_fixed
+ExampleCorp,swap,10000000,EUR,5,true
