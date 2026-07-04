@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <stdexcept>
 #include <utility>
+#include <cmath>
 
 namespace rates::market {
 
@@ -46,6 +47,12 @@ double YieldCurve::zero_rate(double tenor_years) const
     }
 
     return points_.back().rate;
+}
+
+double YieldCurve::discount_factor(double tenor_years) const
+{
+double zero_rate = YieldCurve::zero_rate(tenor_years);
+return exp(-zero_rate*tenor_years);
 }
 
 } // namespace rates::market

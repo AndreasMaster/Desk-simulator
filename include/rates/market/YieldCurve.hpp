@@ -15,6 +15,8 @@ public:
 
     double zero_rate(double tenor_years) const;
 
+    double discount_factor(double tenor_years) const;
+
 private:
     std::vector<CurvePoint> points_{};
 };

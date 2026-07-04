@@ -25,6 +25,7 @@ add_library(rates_lib
 
     src/pricing/SwapPricer.cpp
     src/pricing/RiskCalculator.cpp
+    src/pricing/Discounting.cpp
 
     src/desk/QuoteEngine.cpp
     src/desk/HedgeEngine.cpp

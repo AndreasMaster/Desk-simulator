@@ -2,6 +2,9 @@
 #include "rates/io/CsvReader.hpp"
 #include "rates/market/YieldCurve.hpp"
 #include "rates/market/CurvePoint.hpp"
+#include "rates/market/MarketData.hpp"
+#include "rates/core/CashFlow.hpp"
+#include "rates/pricing/Discounting.hpp"
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -22,5 +25,10 @@ int main()
     }
     rates::market::YieldCurve yield_curve(points);
     cout << "interpoleret rente: "<<yield_curve.zero_rate(1.5)<<"\n";
+    cout << "discount factor : "<<yield_curve.discount_factor(1.5)<<"\n";
+    rates::market::MarketData market_data(std::move(yield_curve));
+    rates::core::CashFlow cash_flow{1.5, 100.0};
+    rates::pricing::Discounting discounting;
+    cout << "PV cashflow: " << discounting.PV(cash_flow, market_data) << "\n";
     return 0;
 }

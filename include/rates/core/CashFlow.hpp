@@ -5,7 +5,7 @@
 namespace rates::core {
 
 struct CashFlow {
-    Date payment_date{};
+    double payment_time_years{};
     double amount{};
 };
 

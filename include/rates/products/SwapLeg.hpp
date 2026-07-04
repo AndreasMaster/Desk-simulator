@@ -1,6 +1,8 @@
 #pragma once
 
-#include "rates/core/Schedule.hpp"
+#include "rates/core/CashFlow.hpp"
+
+#include <vector>
 
 namespace rates::products {
 
@@ -11,10 +13,7 @@ enum class LegType {
 
 class SwapLeg {
 public:
-    LegType type{LegType::Fixed};
-    rates::core::Schedule schedule{};
-    double notional{};
-    double rate{};
+    std::vector<rates::core::CashFlow> cash_flows{};
 };
 
 } // namespace rates::products
