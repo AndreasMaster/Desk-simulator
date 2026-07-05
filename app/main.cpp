@@ -5,6 +5,8 @@
 #include "rates/market/MarketData.hpp"
 #include "rates/core/CashFlow.hpp"
 #include "rates/pricing/Discounting.hpp"
+#include "rates/products/Swap.hpp"
+#include "rates/pricing/SwapPricer.hpp"
 #include <iostream>
 #include <vector>
 using namespace std;
@@ -27,8 +29,17 @@ int main()
     cout << "interpoleret rente: "<<yield_curve.zero_rate(1.5)<<"\n";
     cout << "discount factor : "<<yield_curve.discount_factor(1.5)<<"\n";
     rates::market::MarketData market_data(std::move(yield_curve));
-    rates::core::CashFlow cash_flow{1.5, 100.0};
-    rates::pricing::Discounting discounting;
-    cout << "PV cashflow: " << discounting.PV(cash_flow, market_data) << "\n";
+    rates::products::Swap swap;
+    swap.receive_leg.cash_flows = {
+    {1.0, 30.0},
+    {2.0, 30.0},
+    {3.0, 1030.0}};
+    swap.pay_leg.cash_flows = {
+    {1.0, 25.0},
+    {2.0, 25.0},
+    {3.0, 1025.0}};
+    rates::pricing::SwapPricer pricer;
+    double swap_pv = pricer.price(swap,market_data);
+    cout << "Swap PV: "<<swap_pv<<"\n";
     return 0;
 }

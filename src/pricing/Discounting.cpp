@@ -8,7 +8,10 @@ namespace rates::pricing {
 double Discounting::PV(const std::vector<core::CashFlow>& cf, const market::MarketData& market_data) const
 {
     double pv=0;
-return cf.amount*market_data.discount_curve().discount_factor(cf.payment_time_years);
+    for ( const auto& cashflow : cf){
+        pv+=cashflow.amount*market_data.discount_curve().discount_factor(cashflow.payment_time_years);
+    }
+return pv;
 }
 
 } // namespace rates::pricing
