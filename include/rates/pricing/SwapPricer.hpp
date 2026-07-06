@@ -8,6 +8,7 @@ namespace rates::pricing {
 class SwapPricer {
 public:
     double price(const products::Swap& swap, const market::MarketData& market_data) const;
+    double par_rate(const products::Swap& swap, const market::MarketData& market_data) const;
 };
 
 } // namespace rates::pricing

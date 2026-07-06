@@ -30,14 +30,20 @@ int main()
     cout << "discount factor : "<<yield_curve.discount_factor(1.5)<<"\n";
     rates::market::MarketData market_data(std::move(yield_curve));
     rates::products::Swap swap;
-    swap.receive_leg.cash_flows = {
-    {1.0, 30.0},
-    {2.0, 30.0},
-    {3.0, 1030.0}};
-    swap.pay_leg.cash_flows = {
-    {1.0, 25.0},
-    {2.0, 25.0},
-    {3.0, 1025.0}};
+    swap.receive_leg.type = rates::products::LegType::Floating;
+    swap.receive_leg.spread = 0.005;
+    swap.receive_leg.notional = 100.0;
+    swap.receive_leg.periods = {
+        {0.0, 1.0, 1.0, 1.0},
+        {1.0, 2.0, 2.0, 1.0},
+        {2.0, 3.0, 3.0, 1.0}
+    };
+
+    swap.pay_leg.type = rates::products::LegType::Fixed;
+    swap.pay_leg.fixed_rate = 0.025;
+    swap.pay_leg.notional = 100.0;
+    swap.pay_leg.periods = swap.receive_leg.periods;
+
     rates::pricing::SwapPricer pricer;
     double swap_pv = pricer.price(swap,market_data);
     cout << "Swap PV: "<<swap_pv<<"\n";
